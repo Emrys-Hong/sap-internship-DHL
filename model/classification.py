@@ -68,7 +68,7 @@ model1.fit_generator(train_generator, train_generator.n // batch_size, epochs=5,
 
 
 def classify(address):
-    img = image.load_img(address, target_size=(224, 224))
+    # img = image.load_img(address, target_size=(224, 224))
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
