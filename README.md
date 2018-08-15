@@ -5,7 +5,7 @@ cuda8.0     tensorflow 1.3.0
 
 ## download trained files
 ```frozen_inference_graph.pb``` and ```labelmap.pbtxt``` are needed for object_detection.py, can be found in trained_models
-
+```embeddings etc``` are needed in contextual.py, can be found in trained models.
 
 
 ## Procedure
@@ -22,3 +22,11 @@ cuda8.0     tensorflow 1.3.0
 ```model/contextual.py``` input: text from tesseract.py; output: structured final data
 
 ```test.py``` test the result for pipline.
+
+
+## how to generate those files if they do not work
+```model/contextual.py``` is using [this github](https://github.com/guillaumegenthial/sequence_tagging) to produce result. they produce SOTA result on coNLL classification tasks. i downloaded the fasttext embedding for thai (if you want to test on english, i used glove embedding. to produce the test data, use ```parcel_data.xls``` and ```generate_contextual_data.py``` in extra file folder
+
+## problems and evaluation
+```contextual.py``` 
+I have tested the contextual.py on the following cases
