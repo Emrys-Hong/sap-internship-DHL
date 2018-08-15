@@ -122,18 +122,33 @@ def rotate_bound(image, angle):
     return cv2.warpAffine(image, M, (nW, nH),borderMode=0, borderValue=(255,255,255))
 
 
-def rotateImg(image, index):
+def rotateImg(image):
     
     img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     
     # sometimes cannot detect anyline so need to try
     try:
-        angle = compute_skew(img, index)
+        angle = compute_skew(img, 1)
         # commented process for generating training data
         img = process(img)
         img = rotate_bound(img, -angle)
         if isFlipped(img):
             img = rotate_bound(img, 180)
+    except Exception as e:
+        # print index if cannot detect anyline
+        print('rotate wrong: ', index)
+        img = process(image)
+    return img
+
+def rotateBarcode(image):
+    img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # sometimes cannot detect anyline so need to try
+    try:
+        angle = compute_skew(img, 1)
+        # commented process for generating training data
+        img = process(img)
+        img = rotate_bound(img, -angle+90)
     except Exception as e:
         # print index if cannot detect anyline
         print('rotate wrong: ', index)
