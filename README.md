@@ -31,6 +31,4 @@ classification models and dataset ```pvsh``` and ```4_kind_pre``` can be found i
 ## how to generate those files if they do not work
 ```model/contextual.py``` is using [this github](https://github.com/guillaumegenthial/sequence_tagging) to produce result. they produce SOTA result on coNLL classification tasks. i downloaded the fasttext embedding for thai (if you want to test on english, i used glove embedding. to produce the test data, use ```parcel_data.xls``` and ```generate_contextual_data.ipynb``` in ```extra_file``` folder
 
-## problems and evaluation
-```contextual.py``` 
-I have tested the contextual.py on the following cases
+
