@@ -4,8 +4,8 @@ install the dependency in requirements.txt
 cuda8.0     tensorflow 1.3.0
 
 ## download trained files
-```frozen_inference_graph.pb``` and ```labelmap.pbtxt``` are needed for object_detection.py, can be found in trained_models
-```embeddings etc``` are needed in contextual.py, can be found in trained models.
+```frozen_inference_graph.pb``` and ```labelmap.pbtxt``` are needed for object_detection.py, can be found in ```trained_models``` folder
+```embeddings etc``` are needed in contextual.py, can be found in trained models. download the ```sequence_tagging_thailand``` from the ```trained_model``` folder and put ```model/contextual.py``` in ```sequence_tagging_thailand``` to predict.
 
 
 ## Procedure
