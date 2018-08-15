@@ -3,6 +3,11 @@
 install the dependency in requirements.txt
 cuda8.0     tensorflow 1.3.0
 
+## download trained files
+```frozen_inference_graph.pb``` and ```labelmap.pbtxt``` are needed for object_detection.py, can be found in trained_models
+
+
+
 ## Procedure
 ```model/object_detection.py``` input: raw image from DHL, output: four coordinate for address and bar code
 
