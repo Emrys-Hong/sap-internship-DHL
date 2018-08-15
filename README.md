@@ -5,7 +5,11 @@ cuda8.0     tensorflow 1.3.0
 
 ## download trained files
 ```frozen_inference_graph.pb``` and ```labelmap.pbtxt``` are needed for object_detection.py, can be found in ```trained_models``` folder
+
+classification models and dataset ```pvsh``` and ```4_kind_pre``` can be found in ```trained_models``` folder. i used dataset ```pvsh``` to classify and got an accuracy of 88. need to specify the path in ```classification.py```
+
 ```embeddings etc``` are needed in contextual.py, can be found in trained models. download the ```sequence_tagging_thailand``` from the ```trained_model``` folder and put ```model/contextual.py``` in ```sequence_tagging_thailand``` to predict.
+
 
 
 ## Procedure
