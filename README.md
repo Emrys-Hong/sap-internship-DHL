@@ -35,7 +35,8 @@ classification models and dataset ```pvsh``` and ```4_kind_pre``` can be found i
 download the ```results```(trained models in it) and ```data``` (trained data in it) folder and put it in root directory
 
 ## results
-### ```CUDA_VISIBLE_DEVIECS=1 python test_entity_linking.py test_images/62.png```
+for entity_linking code run:
+```CUDA_VISIBLE_DEVIECS=1 python test_entity_linking.py test_images/62.png```
 predictions:
 ```
 barcode is: TDPSHO720171
@@ -56,4 +57,5 @@ Address: หอสุทธิลักษณ์ 473/1 ม.27 ตำบลศิ
 ```
 
 
-### ```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/62.png```
+for contextual NER code run:
+```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/62.png```
