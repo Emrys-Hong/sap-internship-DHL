@@ -36,15 +36,24 @@ download the ```results```(trained models in it) and ```data``` (trained data in
 
 ## results
 ### ```CUDA_VISIBLE_DEVIECS=1 python test_entity_linking.py test_images/62.png```
-results:
+predictions:
 ```
 barcode is: TDPSHO720171
-sucessfully loaded the model
 preprovince ขอนแก่น
 prepostcode 40000
 prename อเมืองจขชอนนคน
-pre_tel unable to identify num
 pre_address ส.จุฑามาศ. เลิน ห้อง 610
 หอสทธิลักษณ์ 473/โหมุ27 ด.ติลฯ
 ```
+results:
+```
+Barcode: TDPSH07201711223
+Province: ขอนแก่น
+Zipcode: 40000
+Name: จุฑามาศ เมลิน ห้อง610
+State: ขอนแก่น
+Address: หอสุทธิลักษณ์ 473/1 ม.27 ตำบลศิลา
+```
+
+
 ### ```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/62.png```
