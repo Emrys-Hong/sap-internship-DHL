@@ -1,7 +1,7 @@
 from model.data_utils import CoNLLDataset
 from model.ner_model import NERModel
 from model.config import Config
-import fire
+
 def align_data(data):
     """Given dict with lists, creates aligned strings
 
@@ -33,20 +33,15 @@ def align_data(data):
 
 
 def predict_dhl(model, sentence):
-    """Creates interactive shell to play with model
 
-    Args:
-        model: instance of NERModel
-        sentence: sentence from tesseract you want to test
+        words_raw = sentence.strip().split()
 
-    """
-    words_raw = sentence.strip().split(" ")
 
-    preds = model.predict(words_raw)
-    to_print = align_data({"input": words_raw, "output": preds})
+        preds = model.predict(words_raw)
+        to_print = align_data({"input": words_raw, "output": preds})
 
-    for key, seq in to_print.items():
-        model.logger.info(seq)
+        for key, seq in to_print.items():
+            model.logger.info(seq)
 
 
 def main():
@@ -57,8 +52,13 @@ def main():
     model = NERModel(config)
     model.build()
     model.restore_session(config.dir_model)
+
+    # create dataset
+    test  = CoNLLDataset(config.filename_test, config.processing_word,
+                         config.processing_tag, config.max_iter)
+
     return model
+
 
 if __name__ == "__main__":
     model = main()
-    

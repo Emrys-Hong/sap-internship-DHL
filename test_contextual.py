@@ -51,7 +51,7 @@ def predict_dhl(model, sentence):
         sentence: sentence from tesseract you want to test
 
     """
-    words_raw = sentence.strip().split(" ")
+    words_raw = sentence.strip().split()
 
     preds = model.predict(words_raw)
     to_print = align_data({"input": words_raw, "output": preds})
@@ -87,22 +87,37 @@ def purge_bar(string):
 
 def to_text(path_to_image):
     address_tag_coord, bar_code_coord = object_detection(path_to_image)
-    bar_code = crop(bar_code_coord, path_to_image)
-    address_tag = crop(address_tag_coord, path_to_image)
-    deskewed_address_tag = rotateImg(address_tag)
-    deskewd_bar = rotateImg(bar_code)
-    cv2.imwrite('tmp/address_tag.jpg', deskewed_address_tag)
-    printed = classify('tmp/address_tag.jpg')
-    address = tesseract(deskewed_address_tag) if printed else None
-    bar = image_to_string(deskewd_bar)
-    bar = purge_bar(bar)
+    if bar_code_coord:
+        bar_code = crop(bar_code_coord, path_to_image)
+        deskewd_bar = rotateImg(bar_code)
+        bar = image_to_string(deskewd_bar)
+        bar = purge_bar(bar)
+    else:
+        bar = None
+        print('unable to locate bar code')
+    if address_tag_coord:
+        address_tag = crop(address_tag_coord, path_to_image)
+        deskewed_address_tag = rotateImg(address_tag)
+        cv2.imwrite('tmp/address_tag.jpg', deskewed_address_tag)
+        printed = classify('tmp/address_tag.jpg')
+        if printed:
+            address = tesseract(deskewed_address_tag)
+        else:
+           address =  None
+           print('unable to recognize hand written address tags')
+    else:
+        address = None
+        print('unable to locate address tag')
     return address, bar
 
 def test(path_to_image):
     address, bar = to_text(path_to_image)
-    print('barcode is:', bar)
+    if bar:
+        print('barcode is:', bar)
     print('sucessfully loaded the model')
-    predict_dhl(model, address)
+    if address: 
+        predict_dhl(model, address)
 
 if __name__ == '__main__':
+
     fire.Fire(test)
