@@ -60,13 +60,15 @@ def predict_dhl(model, sentence):
         model.logger.info(seq)
 
 
-# create instance of config
-config = Config()
+def main():
+    # create instance of config
+    config = Config()
 
-# build model
-model = NERModel(config)
-model.build()
-model.restore_session(config.dir_model)
+    # build model
+    model = NERModel(config)
+    model.build()
+    model.restore_session(config.dir_model)
+    return model
 
 
 
@@ -101,6 +103,7 @@ def to_text(path_to_image):
 def test(path_to_image):
     address, bar = to_text(path_to_image)
     print('barcode is:', bar)
+    model = main()
     print('sucessfully loaded the model')
     predict_dhl(model, address)
 

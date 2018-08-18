@@ -148,7 +148,7 @@ def rotateBarcode(image):
         angle = compute_skew(img, 1)
         # commented process for generating training data
         img = process(img)
-        img = rotate_bound(img, -angle+90)
+        img = rotate_bound(img, -angle)
     except Exception as e:
         # print index if cannot detect anyline
         print('rotate wrong: ', index)

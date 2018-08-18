@@ -1,8 +1,8 @@
 import cv2
 import fire
 
-def crop(final_list, PATH_TO_IMAGE):
-    image = cv2.imread(PATH_TO_IMAGE)
+def crop(final_list, image_path):
+    image = cv2.imread(image_path)
     xmin = int(final_list[0][0])
     ymin = int(final_list[0][1])
     xmax = int(final_list[0][2])

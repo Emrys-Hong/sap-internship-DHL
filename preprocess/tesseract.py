@@ -5,7 +5,7 @@ from pytesseract import image_to_string
 
 
 def tesseract(img):
-    txt = image_to_string(rotated, lang='tha+eng')
+    txt = image_to_string(img, lang='tha+eng')
     return txt
 
 
