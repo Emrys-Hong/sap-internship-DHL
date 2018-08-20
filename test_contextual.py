@@ -51,14 +51,13 @@ def predict_dhl(model, sentence):
         sentence: sentence from tesseract you want to test
 
     """
-    words_raw = sentence.strip().split()
+    words_raw = sentence.strip().split('\n')
 
     preds = model.predict(words_raw)
     to_print = align_data({"input": words_raw, "output": preds})
 
     for key, seq in to_print.items():
         model.logger.info(seq)
-
 
 # create instance of config
 config = Config()
@@ -127,12 +126,14 @@ def purge_regular(string, cleaned_up_list):
             if purged_clean in purged_word:
                 string = string.replace(word, ' ')
     for word in words:
-        if fuzz.ratio('รหัสไปรษณีย์', word)>90:
+        if fuzz.ratio('รหัสไปรษณีย์', word) > 90:
             string = string.replace(word, ' ')
     return string
 cleaned_up_list = ['Tel', 'ผรบ', 'กรณาสง', 'รหสไปรษณย', 'ชอผรบ', 'tel', 'จ.']
+
 def test(path_to_image):
     address, bar = to_text(path_to_image)
+    print('tesseract output', address)
     address = purge_regular(address, cleaned_up_list)
     if bar:
         print('barcode is:', bar)

@@ -349,7 +349,6 @@ class NERModel(BaseModel):
 
         """
         words = [self.config.processing_word(w) for w in words_raw]
-        print(words)
         if type(words[0]) == tuple:
             words = zip(*words)
         pred_ids, _ = self.predict_batch([words])
