@@ -36,7 +36,7 @@ download the ```results```(trained models in it) and ```data``` (trained data in
 
 ## results
 for entity_linking code run:
-```CUDA_VISIBLE_DEVIECS=1 python test_entity_linking.py test_images/62.png```
+```CUDA_VISIBLE_DEVIECS=1 python test_entity_linking.py test_images/63.png```
 predictions:
 ```
 barcode is: TDPSHO720171
@@ -58,4 +58,8 @@ Address: หอสุทธิลักษณ์ 473/1 ม.27 ตำบลศิ
 
 
 for contextual NER code run:
-```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/62.png```
+```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/63.png```
+
+
+for the newest combined code run:
+```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/63.png```
