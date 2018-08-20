@@ -350,7 +350,7 @@ def get_tel_address(text):
 ## this function is to purge regular words
 ## such as 'receipients' name' and 'from' 
 #########
-def purge_regular(string, cleaned_up_list):
+def purge_regular(string, cleaned_up_list, name):
     words = string.split()
     for clean in cleaned_up_list:
         for word in words:
@@ -358,6 +358,12 @@ def purge_regular(string, cleaned_up_list):
             purged_clean = purge(clean)
             if purged_clean in purged_word:
                 string = string.replace(word, ' ')
+    for word in words:
+        if fuzz.ratio('รหัสไปรษณีย์', word)>90:
+            string = string.replace(word, ' ')
+    for word in string.split('\n'):
+        if fuzz.ratio('word', name) > 90:
+            string = string.replace(word, ' ')
     return string
 
 
@@ -372,7 +378,7 @@ def combine(txt):
     # pre_tel
     pre_tel, pre_address = get_tel_address(text)
     # purge pre_address
-    pre_address = purge_regular(pre_address, cleaned_up_list)
+    pre_address = purge_regular(pre_address, cleaned_up_list, pre_name)
     pre_address = pre_address.strip()
     return pre_province, pre_postcode, pre_name, pre_tel, pre_address
 
@@ -419,6 +425,8 @@ def to_text(path_to_image):
 
 def test(path_to_image):
     address, bar = to_text(path_to_image)
+    print('address', address)
+    print('bar', bar)
     if bar:
         print('barcode is:', bar)
     print('sucessfully loaded the model')

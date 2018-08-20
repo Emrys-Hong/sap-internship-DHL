@@ -10,7 +10,7 @@ import cv2
 from model.data_utils import CoNLLDataset
 from model.ner_model import NERModel
 from model.config import Config
-
+from fuzzywuzzy import fuzz
 
 
 def align_data(data):
@@ -110,8 +110,30 @@ def to_text(path_to_image):
         print('unable to locate address tag')
     return address, bar
 
+def purge(string):
+    new_string = ''
+    delete_list = [b'\xe0\xb8\xb1',b'\xe0\xb8\xb3',b'\xe0\xb8\xb4',b'\xe0\xb8\xb5',b'\xe0\xb8\xb6',b'\xe0\xb8\xb7',b'\xe0\xb8\xb8',b'\xe0\xb8\xb9',b'\xe0\xb8\xba',b'\xe0\xb9\x87',b'\xe0\xb9\x88',b'\xe0\xb9\x89',b'\xe0\xb9\x8a',b'\xe0\xb9\x8b',b'\xe0\xb9\x8c',b'\xe0\xb9\x8d',b'\xe0\xb9\x8e']
+    for char in string:
+        if char.encode('utf') not in delete_list:
+            new_string += char
+    return new_string
+
+def purge_regular(string, cleaned_up_list):
+    words = string.split()
+    for clean in cleaned_up_list:
+        for word in words:
+            purged_word = purge(word)
+            purged_clean = purge(clean)
+            if purged_clean in purged_word:
+                string = string.replace(word, ' ')
+    for word in words:
+        if fuzz.ratio('รหัสไปรษณีย์', word)>90:
+            string = string.replace(word, ' ')
+    return string
+cleaned_up_list = ['Tel', 'ผรบ', 'กรณาสง', 'รหสไปรษณย', 'ชอผรบ', 'tel', 'จ.']
 def test(path_to_image):
     address, bar = to_text(path_to_image)
+    address = purge_regular(address, cleaned_up_list)
     if bar:
         print('barcode is:', bar)
     print('sucessfully loaded the model')
