@@ -481,13 +481,13 @@ cleaned_up_list = ['Tel', 'ผรบ', 'กรณาสง', 'รหสไปร
 
 def test(path_to_image):
     address, bar = to_text(path_to_image)
-    address = purge_regular(address, cleaned_up_list)
     print('The tesseract output', address)
     print('-------------------------------------')
     if bar:
         print('barcode is:', bar)
     print('sucessfully loaded the model')
-    if address: 
+    if address:
+        address = purge_regular(address, cleaned_up_list) 
         # first uses address in the database to identify province and postcode from the address
         pre_province, pre_postcode, pre_name, pre_tel, pre_address = combine(address)
         # purge the postcode from the address
@@ -502,10 +502,9 @@ def test(path_to_image):
         output_dict['postcode'] = pre_postcode
         if bar:
             output_dict['barcode'] = bar
-        # print(output_dict)
+        print(output_dict)
         out_j = json.dumps(output_dict)
         return out_j
-            
 
 if __name__ == '__main__':
     # create instance of config
