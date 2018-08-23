@@ -503,8 +503,8 @@ def test(path_to_image):
         if bar:
             output_dict['barcode'] = bar
         print(output_dict)
-        out_j = json.dumps(output_dict)
-        return out_j
+        with open ('test.json', 'w') as f:
+            json.dump(output_dict, f)
 
 if __name__ == '__main__':
     # create instance of config
