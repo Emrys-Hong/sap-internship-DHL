@@ -63,3 +63,9 @@ for contextual NER code run:
 
 for the newest combined code run:
 ```CUDA_VISIBLE_DEVIECS=1 python test_contextual.py test_images/63.png```
+
+## running time and memory taken
+for cpu only
+```cpu memory: 725.6MB; running time per picture: 22.2s```
+for gpu and cpu
+```cpu memory: 2566MB; GPU memory: 19700MB; running time per picture: 12.9s```
