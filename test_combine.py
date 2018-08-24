@@ -29,6 +29,9 @@ from model.ner_model import NERModel
 from model.config import Config
 from fuzzywuzzy import fuzz
 import json
+import os
+import psutil
+import time
 #####################################
 # building up thai map dictionary
 #####################################
@@ -445,7 +448,7 @@ def predict_dhl(model, sentence):
         if o not in output_dict:
             output_dict[o] = i
         else:
-            output_dict[o] = i + output_dict[o]
+            output_dict[o] = output_dict[o] + i
     return output_dict
 
 
@@ -479,7 +482,15 @@ def purge_regular(string, cleaned_up_list):
     return string
 cleaned_up_list = ['Tel', 'ผรบ', 'กรณาสง', 'รหสไปรษณย', 'ชอผรบ', 'tel', 'จ.']
 
+def clean_tel(tel):
+    string = ''
+    for d in tel:
+        if d.isdigit():
+            string += d
+    return string
+
 def test(path_to_image):
+    start_time = time.time()
     address, bar = to_text(path_to_image)
     print('The tesseract output', address)
     print('-------------------------------------')
@@ -497,14 +508,21 @@ def test(path_to_image):
             if fuzz.partial_ratio(purge(word), pre_postcode) == 100: # if they are 100 match, the threshold can be adjusted
                 address = address.replace(word, ' ')
         # use contextual way to predict the output
-        output_dict = predict_dhl(model, address)
-        output_dict['state'] = pre_province
-        output_dict['postcode'] = pre_postcode
+        object_info = predict_dhl(model, address)
+        object_info['state'] = pre_province
+        object_info['postcode'] = pre_postcode
+        object_info['phone'] = clean_tel(object_info['phone'])
         if bar:
-            output_dict['barcode'] = bar
-        print(output_dict)
+            object_info['barcode'] = bar
+        resource_info = {}
+        end_time = time.time()
+        process = psutil.Process(os.getpid())
+        resource_info['memory'] = f'{process.memory_info().rss/1024/1024}MB'
+        resource_info['time'] = f'{end_time-start_time}s'
+        final_dict = {'resource_info':resource_info, 'object_info':object_info}
+        print(final_dict)
         with open ('test.json', 'w') as f:
-            json.dump(output_dict, f)
+            json.dump(final_dict, f)
 
 if __name__ == '__main__':
     # create instance of config
