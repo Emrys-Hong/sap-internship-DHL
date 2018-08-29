@@ -205,6 +205,8 @@ cleaned_up_list = ['Tel', 'ผรบ', 'กรณาสง', 'รหสไปร
 #########
 def get_pro_post(text):
     getPostCode = get_province_postcode(text, index)
+    pre_postcode = ' '
+    purge_province = ' '
     ### result is province
 
     if  getPostCode == []:
@@ -219,7 +221,7 @@ def get_pro_post(text):
         try:
             pre_postcode = pro2post[pre_province]
         except Exception:
-            pre_postcode = 'could not find postcode through province'
+            pre_postcode = ' '
 
         ## purge the postcode, usually not necessary because the postcode is usually not contained there
         try:
@@ -277,7 +279,8 @@ def get_pro_post(text):
             pre_province = get_province_postcode(text,index)[0][0]
             pre_postcode = get_province_postcode(text,index)[0][1]
         except Exception:
-            pre_province = 'error'
+            pre_province = '  '
+            pre_postcode = '  '
 
         ## purge postcode
         try:
@@ -379,8 +382,11 @@ def purge_regular(string, cleaned_up_list, name):
 # ALL IN ONE
 #####################################
 def combine(txt):
-
+    pre_name = ' '
+    pre_tel = ' '
+    pre_address = ' '
     pre_province, pre_postcode, text = get_pro_post(txt)
+
     # pre_name
     pre_name, text = get_name(text)
     # pre_tel
@@ -443,7 +449,7 @@ def predict_dhl(model, sentence):
 
     preds = model.predict(words_raw)
     to_print = align_data({"input": words_raw, "output": preds})
-    output_dict = {}
+    output_dict = {"phone": " ", "name": " ", "address": " ", "state": " ", "postcode": " ", "barcode": " "}
     for i, o in zip(words_raw, to_print['output'].split()):
         if o not in output_dict:
             output_dict[o] = i
