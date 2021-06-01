@@ -218,7 +218,7 @@ twine==1.11.0
 typing==3.6.2
 ujson==1.35
 unicodecsv==0.14.1
-urllib3==1.22
+urllib3==1.26.5
 wcwidth==0.1.7
 webencodings==0.5.1
 Werkzeug==0.14.1
